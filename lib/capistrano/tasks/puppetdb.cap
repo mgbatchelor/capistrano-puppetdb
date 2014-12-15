@@ -1,0 +1,8 @@
+namespace :puppetdb do
+  desc "list servers and their roles"
+  task :servers do
+    on roles(:all) do |host|
+      info "host: #{host}, roles: #{host.roles.to_a.join(', ')}"
+    end
+  end
+end

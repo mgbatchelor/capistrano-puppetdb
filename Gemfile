@@ -1,3 +1,4 @@
 source 'https://rubygems.org/'
 
-gem 'puppetdb-ruby'
+# pull deps from gemspec
+gemspec

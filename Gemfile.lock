@@ -1,16 +1,37 @@
+PATH
+  remote: .
+  specs:
+    capistrano-puppetdb (0.0.1)
+      capistrano
+      puppetdb-ruby
+
 GEM
   remote: https://rubygems.org/
   specs:
+    capistrano (3.2.1)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    colorize (0.7.3)
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    i18n (0.6.11)
     json (1.8.1)
     multi_xml (0.5.5)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.1)
     puppetdb-ruby (0.0.1)
       httparty
+    rake (10.3.2)
+    sshkit (1.5.1)
+      colorize
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  puppetdb-ruby
+  capistrano-puppetdb!

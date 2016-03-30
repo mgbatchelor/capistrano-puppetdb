@@ -4,6 +4,7 @@ require 'set'
 module Capistrano
   class PuppetDB
     def self.build_serverlist
+      application = fetch(:application)
       stage = fetch(:stage)
       tag = fetch(:puppetdb_query_tag) || stage
       role_parameter = fetch(:puppetdb_role_param) || 'role'
@@ -12,10 +13,13 @@ module Capistrano
 
       client = ::PuppetDB::Client.new({:server => puppetdb_server})
 
-      resource = ::PuppetDB::Query[:'=', 'type', query_resource_type]
-      resource_tag = ::PuppetDB::Query[:'=', 'tag', tag]
+      query = [
+        ::PuppetDB::Query[:'=', 'type', query_resource_type],
+        ::PuppetDB::Query[:'=', 'tag', application],
+        ::PuppetDB::Query[:'=', 'tag', tag]
+      ]
 
-      server_map = client.request('resources',resource.and(resource_tag)).data.inject({}) do |hashmap, role_resource|
+      server_map = client.request('resources', query).data.inject({}) do |hashmap, role_resource|
         hashmap[role_resource['certname']] ||= Set.new
         hashmap[role_resource['certname']] << role_resource['parameters'][role_parameter]
         hashmap

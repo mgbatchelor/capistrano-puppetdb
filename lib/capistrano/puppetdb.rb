@@ -17,7 +17,7 @@ module Capistrano
         ::PuppetDB::Query[:'=', 'type', query_resource_type],
         ::PuppetDB::Query[:'=', 'tag', application],
         ::PuppetDB::Query[:'=', 'tag', tag]
-      ]
+      ].reduce(&:and)
 
       server_map = client.request('resources', query).data.inject({}) do |hashmap, role_resource|
         hashmap[role_resource['certname']] ||= Set.new
